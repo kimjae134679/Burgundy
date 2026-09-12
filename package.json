@@ -1,0 +1,15 @@
+{
+  "name": "burgundy-online",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @burgundy/web",
+    "build": "npm run build -w @burgundy/web",
+    "test": "npm run test -w @burgundy/game-core",
+    "typecheck": "npm run typecheck -ws --if-present"
+  }
+}
