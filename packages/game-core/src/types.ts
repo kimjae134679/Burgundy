@@ -5,14 +5,17 @@ export type DieValue = 1 | 2 | 3 | 4 | 5 | 6;
 
 export type RulesetId = 'special-edition-base';
 
-export type SeatKind = 'human' | 'ai' | 'empty';
+export type SeatKind = 'human' | 'ai' | 'empty' | 'closed';
 export type AiDifficulty = 'easy' | 'normal' | 'hard';
+export type PlayerColor = 'blue' | 'red' | 'green' | 'gold';
 
 export interface HumanSeat {
   kind: 'human';
   playerId: string;
   displayName: string;
   connected: boolean;
+  color?: PlayerColor;
+  board?: number;
 }
 
 export interface AiSeat {
@@ -20,21 +23,49 @@ export interface AiSeat {
   playerId: string;
   displayName: string;
   difficulty: AiDifficulty;
+  color?: PlayerColor;
+  board?: number;
 }
 
 export interface EmptySeat {
   kind: 'empty';
+  color?: PlayerColor;
+  board?: number;
 }
 
-export type RoomSeat = HumanSeat | AiSeat | EmptySeat;
+export interface ClosedSeat {
+  kind: 'closed';
+  color?: PlayerColor;
+  board?: number;
+}
+
+export type RoomSeat = HumanSeat | AiSeat | EmptySeat | ClosedSeat;
 
 export interface RoomState {
   code: string;
   visibility: 'private' | 'public';
+  hostPlayerId: string;
   maxPlayers: PlayerCount;
   seats: RoomSeat[];
   started: boolean;
   replaceAiOnJoin: boolean;
+  revision: number;
+}
+
+export type TurnStage =
+  | 'waiting'
+  | 'choose-die'
+  | 'choose-action'
+  | 'choose-target'
+  | 'confirming'
+  | 'done';
+
+export interface PublicTurnProgress {
+  playerId: string;
+  actionNumber: 0 | 1 | 2;
+  stage: TurnStage;
+  label: string;
+  updatedAt: number;
 }
 
 export type HexTileFamily =

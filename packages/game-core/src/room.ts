@@ -1,7 +1,26 @@
-import type { AiDifficulty, PlayerCount, RoomSeat, RoomState } from './types';
+import type {
+  AiDifficulty,
+  PlayerColor,
+  PlayerCount,
+  RoomSeat,
+  RoomState,
+} from './types';
 
-function emptySeats(count: number): RoomSeat[] {
-  return Array.from({ length: count }, () => ({ kind: 'empty' as const }));
+const COLORS: PlayerColor[] = ['blue', 'red', 'green', 'gold'];
+
+function baseSeat(index: number): Pick<RoomSeat, 'color' | 'board'> {
+  return { color: COLORS[index] ?? 'blue', board: 1 };
+}
+
+function emptySeats(count: number, offset = 0): RoomSeat[] {
+  return Array.from({ length: count }, (_, index) => ({
+    kind: 'empty' as const,
+    ...baseSeat(index + offset),
+  }));
+}
+
+function bump(room: RoomState, seats = room.seats): RoomState {
+  return { ...room, seats, revision: room.revision + 1 };
 }
 
 export function createRoom(input: {
@@ -15,6 +34,7 @@ export function createRoom(input: {
   return {
     code: input.code,
     visibility: input.visibility ?? 'private',
+    hostPlayerId: input.hostPlayerId,
     maxPlayers,
     seats: [
       {
@@ -22,11 +42,13 @@ export function createRoom(input: {
         playerId: input.hostPlayerId,
         displayName: input.hostDisplayName,
         connected: true,
+        ...baseSeat(0),
       },
-      ...emptySeats(maxPlayers - 1),
+      ...emptySeats(maxPlayers - 1, 1),
     ],
     started: false,
     replaceAiOnJoin: false,
+    revision: 0,
   };
 }
 
@@ -57,9 +79,68 @@ export function createSoloVsAiRoom(input: {
             playerId: `ai-${index}`,
             displayName: `AI ${index}`,
             difficulty,
+            color: seat.color,
+            board: seat.board,
           },
     ),
   };
+}
+
+export function setSeatOpen(room: RoomState, seatIndex: number): RoomState {
+  if (room.started || seatIndex === 0 || !room.seats[seatIndex]) return room;
+  const current = room.seats[seatIndex];
+  const seats = [...room.seats];
+  seats[seatIndex] = { kind: 'empty', color: current.color, board: current.board };
+  return bump(room, seats);
+}
+
+export function closeSeat(room: RoomState, seatIndex: number): RoomState {
+  if (room.started || seatIndex === 0 || !room.seats[seatIndex]) return room;
+  const current = room.seats[seatIndex];
+  if (current.kind === 'human') return room;
+  const seats = [...room.seats];
+  seats[seatIndex] = { kind: 'closed', color: current.color, board: current.board };
+  return bump(room, seats);
+}
+
+export function setLocalHumanAtSeat(
+  room: RoomState,
+  seatIndex: number,
+  displayName = `Player ${seatIndex + 1}`,
+): RoomState {
+  if (room.started || seatIndex === 0 || !room.seats[seatIndex]) return room;
+  const current = room.seats[seatIndex];
+  if (current.kind === 'human' && current.playerId !== room.hostPlayerId) return room;
+  const seats = [...room.seats];
+  seats[seatIndex] = {
+    kind: 'human',
+    playerId: `local-${seatIndex}-${room.code}`,
+    displayName,
+    connected: true,
+    color: current.color,
+    board: current.board,
+  };
+  return bump(room, seats);
+}
+
+export function addAiToSeat(
+  room: RoomState,
+  seatIndex: number,
+  difficulty: AiDifficulty = 'normal',
+): RoomState {
+  if (room.started || seatIndex === 0 || !room.seats[seatIndex]) return room;
+  const current = room.seats[seatIndex];
+  if (current.kind === 'human') return room;
+  const seats = [...room.seats];
+  seats[seatIndex] = {
+    kind: 'ai',
+    playerId: `ai-${seatIndex}-${room.code}`,
+    displayName: `AI ${seatIndex + 1}`,
+    difficulty,
+    color: current.color,
+    board: current.board,
+  };
+  return bump(room, seats);
 }
 
 export function addAi(
@@ -67,35 +148,59 @@ export function addAi(
   difficulty: AiDifficulty = 'normal',
 ): RoomState {
   if (room.started) return room;
-  const index = room.seats.findIndex((seat) => seat.kind === 'empty');
+  const index = room.seats.findIndex((seat, seatIndex) => seatIndex > 0 && seat.kind === 'empty');
   if (index < 0) return room;
-
-  const seats = [...room.seats];
-  seats[index] = {
-    kind: 'ai',
-    playerId: `ai-${index}-${room.code}`,
-    displayName: `AI ${index + 1}`,
-    difficulty,
-  };
-  return { ...room, seats };
+  return addAiToSeat(room, index, difficulty);
 }
 
 export function removeAi(room: RoomState, seatIndex: number): RoomState {
   if (room.started || room.seats[seatIndex]?.kind !== 'ai') return room;
+  return setSeatOpen(room, seatIndex);
+}
+
+export function setAiDifficulty(
+  room: RoomState,
+  seatIndex: number,
+  difficulty: AiDifficulty,
+): RoomState {
+  if (room.started || room.seats[seatIndex]?.kind !== 'ai') return room;
   const seats = [...room.seats];
-  seats[seatIndex] = { kind: 'empty' };
-  return { ...room, seats };
+  seats[seatIndex] = { ...room.seats[seatIndex], difficulty };
+  return bump(room, seats);
+}
+
+export function setSeatColor(room: RoomState, seatIndex: number, color: PlayerColor): RoomState {
+  if (room.started || !room.seats[seatIndex]) return room;
+  const seats = [...room.seats];
+  seats[seatIndex] = { ...room.seats[seatIndex], color } as RoomSeat;
+  return bump(room, seats);
+}
+
+export function setSeatBoard(room: RoomState, seatIndex: number, board: number): RoomState {
+  if (room.started || !room.seats[seatIndex]) return room;
+  const seats = [...room.seats];
+  seats[seatIndex] = { ...room.seats[seatIndex], board } as RoomSeat;
+  return bump(room, seats);
+}
+
+export function renameSeat(room: RoomState, seatIndex: number, displayName: string): RoomState {
+  if (room.started || room.seats[seatIndex]?.kind !== 'human') return room;
+  const seats = [...room.seats];
+  seats[seatIndex] = { ...room.seats[seatIndex], displayName };
+  return bump(room, seats);
 }
 
 export function canStartRoom(room: RoomState): boolean {
   if (room.started) return false;
-  const occupied = room.seats.filter((seat) => seat.kind !== 'empty');
-  return occupied.length >= 2 && occupied.length === room.maxPlayers;
+  const openSeats = room.seats.filter((seat) => seat.kind !== 'closed');
+  const occupied = openSeats.filter((seat) => seat.kind === 'human' || seat.kind === 'ai');
+  const hasWaitingSeat = openSeats.some((seat) => seat.kind === 'empty');
+  return occupied.length >= 2 && !hasWaitingSeat;
 }
 
 export function startRoom(room: RoomState): RoomState {
   if (!canStartRoom(room)) {
-    throw new Error('Room needs 2-4 occupied seats and no empty seat before starting.');
+    throw new Error('Room needs at least 2 occupied seats; every open seat must be filled or closed.');
   }
-  return { ...room, started: true };
+  return { ...room, started: true, revision: room.revision + 1 };
 }
