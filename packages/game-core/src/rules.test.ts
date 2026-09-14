@@ -7,7 +7,15 @@ import {
   soldGoodsVpPerTile,
   workersNeeded,
 } from './rules';
-import { addAi, canStartRoom, createRoom, createSoloVsAiRoom } from './room';
+import {
+  addAi,
+  addAiToSeat,
+  canStartRoom,
+  closeSeat,
+  createRoom,
+  createSoloVsAiRoom,
+  setSeatOpen,
+} from './room';
 
 describe('verified base scoring helpers', () => {
   it('scores region size plus phase bonus', () => {
@@ -68,5 +76,23 @@ describe('room model', () => {
 
     expect(room.seats.map((seat) => seat.kind)).toEqual(['human', 'ai', 'ai']);
     expect(canStartRoom(room)).toBe(true);
+  });
+
+  it('starts with two occupied seats when unused seats are locked', () => {
+    let room = createRoom({
+      code: 'LOCK01',
+      hostPlayerId: 'human-1',
+      hostDisplayName: 'You',
+      maxPlayers: 4,
+    });
+    room = addAiToSeat(room, 1, 'normal');
+    room = closeSeat(room, 2);
+    room = closeSeat(room, 3);
+
+    expect(room.seats.map((seat) => seat.kind)).toEqual(['human', 'ai', 'closed', 'closed']);
+    expect(canStartRoom(room)).toBe(true);
+
+    room = setSeatOpen(room, 3);
+    expect(canStartRoom(room)).toBe(false);
   });
 });
