@@ -10,6 +10,8 @@
     "dev": "npm run dev -w @burgundy/web",
     "build": "npm run build -w @burgundy/web",
     "test": "npm run test -w @burgundy/game-core",
-    "typecheck": "npm run typecheck -ws --if-present"
+    "typecheck": "npm run typecheck -ws --if-present",
+    "server:dev": "npm run dev -w @burgundy/server",
+    "server:deploy": "npm run deploy -w @burgundy/server"
   }
 }
