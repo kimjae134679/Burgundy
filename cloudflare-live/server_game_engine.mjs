@@ -197,7 +197,15 @@ function assertActor(s,clientId){
   if(s.gameOver)fail('게임이 종료되었습니다.','GAME_OVER');const p=current(s);if(p.isAI)fail('현재는 AI 턴입니다.','AI_TURN');if(p.ownerClientId!==clientId)fail('현재 플레이어의 차례가 아닙니다.','NOT_YOUR_TURN');return p;
 }
 export function applyGameCommand(state,clientId,command){
-  const s=clone(state),cmd=command||{},p=assertActor(s,clientId),kind=String(cmd.kind||'');
+  const s=clone(state),cmd=command||{},kind=String(cmd.kind||'');
+  if(kind==='cheat_extra_die'||kind==='cheat_endgame'){
+    const humans=s.players.filter(x=>!x.isAI);
+    if(humans.length!==1||humans[0].ownerClientId!==clientId)fail('치트 명령은 사람 플레이어가 1명인 게임에서만 사용할 수 있습니다.','CHEAT_NOT_ALLOWED');
+    const human=humans[0];
+    if(kind==='cheat_extra_die'){const value=Number(cmd.value);if(s.gameOver)fail('게임이 종료되었습니다.','GAME_OVER');if(!Number.isInteger(value)||value<1||value>6)fail('추가 주사위는 1~6만 가능합니다.','BAD_DIE');human.bonusActions=(human.bonusActions||0)+1;log(s,`${human.name}: 치트 추가 주사위 ${value} · 추가 행동 +1.`);return {state:s,action:kind};}
+    if(!s.gameOver){endGame(s);log(s,`${human.name}: 치트로 최종 점수 계산을 시작했습니다.`)}return {state:s,action:kind};
+  }
+  const p=assertActor(s,clientId);
   if(s.pendingEffect&&kind!=='resolve_pending')fail('즉시 효과를 먼저 처리해야 합니다.','PENDING_EFFECT');
   if(kind==='adjust_die'){
     const i=Number(cmd.dieIndex),delta=Number(cmd.delta);if(!Number.isInteger(i)||i<0||i>1||p.used[i])fail('보정할 주사위가 잘못되었습니다.','BAD_DIE');if(!Number.isInteger(delta)||delta===0||Math.abs(delta)>(hasK(p,8)?2:1))fail('보정 범위를 벗어났습니다.','BAD_ADJUST');if(p.workers<1)fail('일꾼이 없습니다.','NO_WORKER');p.dice[i]=mod6(p.dice[i]+delta);p.workers--;log(s,`${p.name}: 일꾼 1개 사용 (${delta>0?'+':''}${delta}) → 주사위 ${p.dice[i]}.`);

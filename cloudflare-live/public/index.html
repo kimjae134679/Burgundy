@@ -3154,5 +3154,29 @@ const _v30Rematch=v29Rematch;v29Rematch=function(){v30EndAcknowledged=false;v30E
 const _v30Render=render;render=function(){_v30Render();if(!G)return;v30RenderBoardStatus();if(!G.gameOver){v30EndAcknowledged=false;v30EndAutoQueued=false;return}if(!v30EndAcknowledged&&!v29EndRunning&&!q('gameEndOverlay')?.classList.contains('on')&&!v30EndAutoQueued){v30EndAutoQueued=true;setTimeout(()=>{v30EndAutoQueued=false;if(G?.gameOver&&!v30EndAcknowledged&&!q('gameEndOverlay')?.classList.contains('on'))v29ShowGameEnd(true)},700)}};
 
 </script>
+
+<script id="soloCheatScript">
+/* hidden solo cheat commands: dice1..6 / speedN / endgame */
+let soloCheatBuffer='',soloCheatSpeed=1,soloCheatPendingDie=null;
+function soloHumans(){return G?.players?.filter(p=>!p.isAI)||[]}
+function soloCheatAllowed(){return !!G&&soloHumans().length===1&&q('game')?.classList.contains('active')}
+function soloCheatToast(text){showActionToast?.(text,'turn')}
+function soloCheatMs(ms){return Math.max(8,ms/Math.max(.05,soloCheatSpeed))}
+const _soloBaseAIDelay=aiDelayMs;aiDelayMs=function(){return Math.max(8,_soloBaseAIDelay()/Math.max(.05,soloCheatSpeed))};
+v29Wait=function(ms,token){return new Promise(resolve=>setTimeout(()=>resolve(token===v29EndToken),soloCheatMs(ms)))};
+async function soloCheatExec(raw){
+  const cmd=String(raw||'').trim().toLowerCase();if(!cmd)return false;
+  if(!soloCheatAllowed()){if(/^(dice|speed|endgame)/.test(cmd))soloCheatToast('치트는 사람 플레이어가 1명인 게임에서만 사용할 수 있습니다.');return false}
+  let m=cmd.match(/^dice([1-6])$/);if(m){const value=Number(m[1]),human=soloHumans()[0];soloCheatPendingDie=value;if(Net.enabled){const r=await sendGameCommand({kind:'cheat_extra_die',value});if(!r?.ok)soloCheatPendingDie=null}else{human.bonusActions=(human.bonusActions||0)+1;log(`${human.name}: 추가 주사위 ${value} · 추가 행동 +1.`);persistLocal?.();render()}soloCheatToast(`DICE ${value} · 추가 행동 +1`);return true}
+  m=cmd.match(/^speed((?:\d+(?:\.\d*)?|\.\d+))$/);if(m){const value=Number(m[1]);if(!Number.isFinite(value)||value<=0||value>100){soloCheatToast('SPEED는 0보다 크고 100 이하로 입력하세요.');return true}soloCheatSpeed=value;document.documentElement.style.setProperty('--soloCheatAnimScale',String(1/value));soloCheatToast(`SPEED ×${value}`);return true}
+  if(cmd==='endgame'){if(Net.enabled)await sendGameCommand({kind:'cheat_endgame'});else if(!G.gameOver)endGame();soloCheatToast('ENDGAME · 최종 점수 계산');return true}
+  return false;
+}
+v26RunStageQueue=function(){if(v26StageBusy||!v26StageQueue.length)return;const item=v26StageQueue.shift(),root=q('stageOverlay');if(!root)return;v26StageBusy=true;root.className=`stageOverlay on ${item.kind||''}`;root.style.setProperty('--stageAccent',item.accent||'#d3a24f');q('stageIcon').textContent=item.icon||({region:'✓',color:'★',phase:'◆',round:'●',end:'♛',combo:'✦'}[item.kind]||'');q('stageEyebrow').textContent=item.eyebrow||'';q('stageTitle').textContent=item.title||'';q('stageSub').textContent=item.sub||'';if(item.sound)v27Sound(item.sound);else if(item.kind==='region'||item.kind==='color')v27Sound('region');else if(item.kind==='phase')v27Sound('phase');clearTimeout(v26StageTimer);v26StageTimer=setTimeout(()=>{root.className='stageOverlay';v26StageBusy=false;setTimeout(v26RunStageQueue,soloCheatMs(90))},soloCheatMs(1740))};
+v27Ribbon=function(title,sub='',icon='★',accent='#d2a04e'){const root=q('eventRibbon');if(!root)return;clearTimeout(v27RibbonTimer);root.style.setProperty('--eventAccent',accent);q('eventRibbonIcon').textContent=icon;q('eventRibbonTitle').textContent=title;q('eventRibbonSub').textContent=sub;root.classList.remove('on');void root.offsetWidth;root.classList.add('on');v27RibbonTimer=setTimeout(()=>root.classList.remove('on'),soloCheatMs(1600))};
+const _soloCheatRender=render;render=function(){if(soloCheatPendingDie&&G&&!G.gameOver){const h=soloHumans()[0];if(h&&current()?.id===h.id&&(h.bonusActions||0)>0){selectedDie='bonus';bonusChosen=soloCheatPendingDie;soloCheatPendingDie=null}}return _soloCheatRender()};
+document.addEventListener('keydown',e=>{if(e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey)return;const t=e.target,tag=t?.tagName;if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'||t?.isContentEditable)return;if(!G||!q('game')?.classList.contains('active')){soloCheatBuffer='';return}if(e.key==='Enter'){if(soloCheatBuffer){const cmd=soloCheatBuffer;soloCheatBuffer='';soloCheatExec(cmd);e.preventDefault()}return}if(e.key==='Backspace'){soloCheatBuffer=soloCheatBuffer.slice(0,-1);return}if(e.key.length===1&&/[a-zA-Z0-9.]/.test(e.key)){soloCheatBuffer=(soloCheatBuffer+e.key).slice(-24)}});
+
+</script>
 </body>
 </html>
