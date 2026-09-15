@@ -1,0 +1,10 @@
+{
+  "name": "burgundy-v27-cloudflare",
+  "version": "27.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  }
+}
