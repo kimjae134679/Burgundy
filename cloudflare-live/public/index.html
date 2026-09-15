@@ -745,6 +745,41 @@ html,body{overflow-x:auto}
 @media(max-width:1180px){.rightRail{display:block!important}.playerRailPanel{grid-column:auto!important}}
 
 .centralBoard{min-height:780px!important}.depotRing{width:900px!important;height:620px!important;top:49%!important}.depot{width:210px!important;height:174px!important;overflow:hidden!important;padding:9px!important}.depotTiles{margin:35px 0 0 38px!important;gap:7px 6px!important;align-content:flex-start!important;max-width:154px!important;max-height:122px!important;overflow:hidden!important}.depotTileWrap{min-width:50px!important;max-width:50px!important;gap:1px!important}.depotTileWrap .hexTile{width:48px!important;height:44px!important;font-size:16px!important}.depotTileWrap .hexTile small{font-size:7px!important;max-width:42px!important}.depotTileKind{font-size:7px!important;padding:1px 4px!important;max-width:48px;overflow:hidden;text-overflow:ellipsis}.blackDepot{width:220px!important;min-height:230px!important;max-height:230px!important;overflow:hidden!important;padding:9px!important;z-index:6}.blackTiles{display:grid!important;grid-template-columns:repeat(3,50px)!important;justify-content:center!important;align-content:start!important;gap:7px 6px!important;max-height:195px!important;overflow:hidden!important}.blackDepot .depotTileWrap .hexTile{width:48px!important;height:44px!important}.depotNum{z-index:7}.goodsSlot{z-index:7;background:#eadcb8e8;padding:2px 3px;border-radius:6px;max-width:88px!important}.tileActionChoice{background:linear-gradient(90deg,color-mix(in srgb,var(--tileAccent) 30%,#26170f 70%),#21130dcc)!important;border-color:#6f4c31!important;border-left-color:var(--tileAccent)!important}.tileActionChoice .tileChoiceIcon{background:color-mix(in srgb,var(--tileAccent) 72%,#f5e8c9 28%)!important;box-shadow:inset 0 0 0 2px #fff3,0 2px 6px #0005}.tileActionChoice .tileRoleBadge{border-color:var(--tileAccent)!important;background:color-mix(in srgb,var(--tileAccent) 30%,#24160f 70%)!important;color:#fff0c8!important}.effectTypeGuide{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:7px;margin:10px 0}.effectTypeChip{border:1px solid #77533a;border-left:7px solid var(--tileAccent,#8f6738);border-radius:9px;padding:8px 9px;background:#1d120d;display:flex;flex-direction:column;gap:3px}.effectTypeChip b{font-size:11px;color:#ffe2a2}.effectTypeChip small{font-size:9px;color:#cbb794}.effectTypeChip.type-beige{--tileAccent:#d2ad74}.effectTypeChip.type-animal{--tileAccent:#86b85c}.effectTypeChip.type-ship{--tileAccent:#69b7d8}.effectTypeChip.type-castle{--tileAccent:#4f8157}.effectTypeChip.type-mine{--tileAccent:#aaa9a1}.effectTypeChip.type-knowledge{--tileAccent:#e1cf55}.effectGuideHint{margin:6px 0 10px!important;color:#c9b28d;font-size:10px}.effectTileChoices{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))!important;gap:8px!important}.effectTileChoices .tileActionChoice{min-height:68px!important}.skipEffectChoice{grid-column:1/-1;opacity:.78}@media(max-width:1450px){.centralBoard{min-height:720px!important}.effectTileChoices{grid-template-columns:repeat(2,minmax(0,1fr))!important}}@media(max-width:980px){.centralBoard{min-height:690px!important}.effectTileChoices{grid-template-columns:1fr!important}}</style>
+<style id="finalQaStyle">
+﻿/* final scoring / post-game QA */
+.gameEndOverlay{padding:14px!important}
+.gameEndCard.finalFlow{width:min(1040px,96vw);max-height:94vh;padding:22px!important;text-align:left!important;overflow:auto}
+.finalHead{text-align:center;margin-bottom:14px}.finalHead .gameEndCrown{font-size:48px}.finalHead h2{margin:2px 0 4px}.finalHead p{margin:0;color:#c9b38d;font-size:12px}
+.finalWinnerBanner{display:none;margin:12px 0 14px;padding:13px 16px;border-radius:14px;border:1px solid #d6ad5d;background:linear-gradient(90deg,#6b2a2f,#3b2115);text-align:center;color:#fff1c2;font-size:18px;font-weight:950;box-shadow:0 10px 28px #0007}
+.finalWinnerBanner.on{display:block;animation:winnerReveal .55s cubic-bezier(.2,.8,.2,1)}
+.finalScoreGrid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(300px,.88fr);gap:12px;align-items:start}
+.finalPlayers{display:grid;gap:8px}.finalPlayer{display:grid;grid-template-columns:46px minmax(0,1fr) auto;gap:9px;align-items:center;padding:11px 12px;border:1px solid #5d402d;border-radius:12px;background:#21140e;transition:.2s}
+.finalPlayer.active{border-color:#e3ba62;background:#3b2618;box-shadow:0 0 0 2px #d6a64a22,0 8px 24px #0005}.finalPlayer.winner{border-color:#e4c36e;background:linear-gradient(90deg,#4a3018,#2a180f)}
+.finalRank{font-size:18px;font-weight:950;color:#e9c974;text-align:center}.finalPlayerName b{font-size:14px;color:#ffe0a0}.finalPlayerName small{display:block;margin-top:3px;color:#bba586;font-size:10px}.finalLiveScore{min-width:68px;text-align:right;font:900 24px Georgia,serif;color:#ffe49d}
+.finalCalc{padding:13px;border:1px solid #68462f;border-radius:13px;background:#160d09;position:sticky;top:0}.finalCalcTitle{font-size:14px;font-weight:950;color:#ffe0a0;margin-bottom:9px}.finalCalcRows{display:grid;gap:6px}.finalCalcRow{display:grid;grid-template-columns:1fr auto;gap:10px;padding:8px 9px;border-radius:9px;border:1px solid #3e2a1e;background:#21150f;color:#ccb99a;font-size:11px;opacity:.58;transition:.22s}.finalCalcRow strong{color:#f4d798}.finalCalcRow.on{opacity:1;border-color:#9f7544;background:#392416;transform:translateX(2px)}
+.finalCalcTotal{margin-top:9px;padding:10px;border-radius:10px;background:#5b272b;border:1px solid #9f6150;display:flex;justify-content:space-between;font-weight:950;color:#fff0c1}.finalControls{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}.finalControls.hidden{display:none!important}.finalControls button{min-height:36px}
+.finalSkip{display:block;margin:10px auto 0}.finalFootNote{text-align:center;margin-top:8px;color:#9f8c71;font-size:9px}.finalBoardBtn{margin-top:5px;padding:4px 7px!important;font-size:9px!important}
+.endReviewDock{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:215;display:none;align-items:center;gap:6px;padding:7px 9px;border:1px solid #8b6039;border-radius:12px;background:#1a0f0beF;box-shadow:0 10px 30px #000a}.endReviewDock.on{display:flex}.endReviewDock span{font-size:10px;color:#d6bd94;font-weight:800;white-space:nowrap}
+.finalConfetti{position:fixed;inset:0;pointer-events:none;z-index:221;overflow:hidden}.finalConfetti i{position:absolute;top:-20px;width:8px;height:14px;border-radius:2px;background:#d6ad5d;animation:confettiFall 1.8s linear forwards}
+@keyframes winnerReveal{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}@keyframes confettiFall{to{transform:translate3d(var(--dx),105vh,0) rotate(720deg);opacity:.2}}
+@media(max-width:800px){.finalScoreGrid{grid-template-columns:1fr}.finalCalc{position:static}.finalPlayer{grid-template-columns:36px 1fr auto}.finalLiveScore{font-size:20px}.endReviewDock{max-width:94vw;overflow:auto}}
+
+</style>
+<style id="mobileQaStyle">
+/* mobile QA */
+@media(max-width:760px){
+html,body{max-width:100%;overflow-x:hidden}.topbar{height:auto;min-height:48px;padding:5px 6px;gap:4px;flex-wrap:wrap}.brand{font-size:15px;min-width:150px}.chip{font-size:9px;padding:4px 6px}.topbtn{font-size:10px;padding:6px 7px}#topMeta{display:none!important}.aiPaceTop{margin-left:0;padding:1px 2px}.aiPaceTop>span{display:none}.aiPaceTop .topbtn{min-width:30px;padding:5px}
+.home,.lobby{padding:12px 8px 40px}.hero{min-height:300px}.heroContent{padding:28px 20px}.hero h1{font-size:38px}.cards,.lobbygrid{grid-template-columns:1fr!important}.formrow{grid-template-columns:95px minmax(0,1fr);gap:7px}.seat{grid-template-columns:38px 1fr auto}.avatar{width:34px;height:34px}
+.gameShell{padding:4px;max-width:100vw}.gameFlowBar{display:none!important}.gameLayout{display:flex!important;flex-direction:column!important;gap:6px}.gameLayout>.rail:first-child{order:1;width:100%}.centralWrap{order:2;width:100%;min-width:0}.rightRail{order:3;width:100%;display:block!important}.woodPanel{padding:7px;border-radius:9px}.resourceHeroGrid{grid-template-columns:repeat(3,minmax(0,1fr))}.goodsInventory{grid-template-columns:repeat(3,minmax(0,1fr))!important}.primaryActionMenu{grid-template-columns:repeat(3,minmax(0,1fr))!important}.primaryAction{min-width:0!important}.storage{flex-wrap:wrap}.storeSlot{flex:1 1 30%;max-width:31%}
+.turnFocusBar{padding:8px;gap:7px}.turnFocusCrown{display:none}.turnFocusMain b{font-size:13px}.turnFocusMain span{font-size:9px}.turnRemain{font-size:9px;padding:6px}.boardSectionLabel{padding:7px 5px;gap:5px;flex-wrap:wrap}.typeLegendBar{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px}.typeLegendBar>b{grid-column:1/-1}.typeLegendBar button{min-width:0;padding:5px 2px}.typeLegendBar small{display:none}
+.centralBoard{min-height:790px!important;border-width:5px!important}.boardTopInfo{left:22px!important;right:22px!important;top:28px!important}.phaseBadges,.roundBadges{gap:2px}.badge{min-width:27px;height:25px;font-size:9px}.depotRing{left:7px!important;right:7px!important;top:68px!important;width:auto!important;height:auto!important;transform:none!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}.depot{position:relative!important;left:auto!important;top:auto!important;width:auto!important;height:138px!important;padding:7px!important}.depotTiles{margin:30px 0 0 30px!important;max-width:none!important;max-height:92px!important;gap:5px!important}.depotTileWrap{min-width:44px!important;max-width:44px!important}.depotTileWrap .hexTile{width:43px!important;height:39px!important}.goodsSlot{max-width:72px!important}.depotState{font-size:7px!important}.blackDepot{position:relative!important;left:auto!important;top:auto!important;transform:none!important;grid-column:1/-1!important;width:100%!important;min-height:210px!important;max-height:210px!important}.blackTiles{grid-template-columns:repeat(4,44px)!important;gap:6px!important}.blackDepot .depotTileWrap .hexTile{width:43px!important;height:39px!important}.turnTrack{bottom:10px!important;width:86%!important;min-height:38px!important}
+.playerBoard{display:block!important;padding:7px!important}.boardViewBar{gap:4px;flex-wrap:wrap}.boardViewTab{font-size:9px;padding:5px}.boardViewActions{width:100%;justify-content:flex-start}.estateColumn{width:100%;min-width:0}.estateViewport{max-width:100%!important;margin:0 auto!important;overflow:hidden!important}.selectionStrip{padding:6px}.rightStore{width:100%;margin-top:6px}.goodsRack{grid-template-columns:repeat(3,minmax(0,1fr))!important}.playerRailPanel .playerCard{margin-bottom:6px}
+.stageOverlay{place-items:start center!important;padding:64px 8px 8px!important;background:transparent!important;backdrop-filter:none!important}.stageCard{min-width:0!important;width:calc(100vw - 16px)!important;max-width:none!important;padding:12px 14px!important;border-radius:13px!important}.stageIcon{display:none!important}.stageTitle{font-size:23px!important}.stageEyebrow{font-size:8px!important}.stageSub{font-size:10px!important;margin-top:5px!important}.eventRibbon{left:8px!important;right:8px!important;top:58px!important;min-width:0!important;max-width:none!important;width:auto!important;transform:none!important}.actionToast{left:8px!important;right:8px!important;bottom:10px!important;width:auto!important;max-width:none!important;transform:none!important}
+.gameEndOverlay{padding:6px!important;align-items:start!important;overflow:auto!important}.gameEndCard{width:100%!important;max-height:none!important;margin:4px 0 70px!important;padding:14px!important;border-radius:14px!important}.gameEndCard h2{font-size:28px!important}.finalScoreGrid{grid-template-columns:1fr!important}.finalPlayer{grid-template-columns:30px 1fr auto!important;padding:8px!important}.finalControls{grid-template-columns:1fr!important}.endReviewDock{left:6px!important;right:6px!important;bottom:6px!important;transform:none!important;max-width:none!important;width:auto!important;justify-content:center;flex-wrap:wrap}.finalConfetti{display:none!important}.modalBack{padding:8px!important}.modal{width:100%!important;max-width:none!important;max-height:88vh!important;overflow:auto!important}.effectTileChoices{grid-template-columns:1fr!important}
+}
+@media(max-width:420px){.depotRing{grid-template-columns:1fr!important}.centralBoard{min-height:1290px!important}.blackDepot{grid-column:auto!important}.blackTiles{grid-template-columns:repeat(3,44px)!important}.typeLegendBar{grid-template-columns:repeat(2,minmax(0,1fr))!important}.primaryActionMenu{grid-template-columns:repeat(2,minmax(0,1fr))!important}.topbar .brand{flex-basis:100%}}
+
+</style>
 </head>
 <body>
 <div class="topbar">
@@ -2992,5 +3027,106 @@ if('ResizeObserver' in window){
   setTimeout(()=>{const c=document.querySelector('.estateColumn');if(c)ro.observe(c)},0);
 }
 v27FitDepotRing=function(){const board=document.querySelector('.centralBoard');if(!board)return;const avail=Math.max(520,board.clientWidth-52),scale=Math.max(.58,Math.min(1,avail/900));document.documentElement.style.setProperty('--depotScale',scale.toFixed(3))};v27TileChoice=function(t,onclick,source=''){const role=V27_TYPE_ROLE[t.type]||tileDescription(t),accent=V27_TYPE_ACCENT[t.type]||'#8f6738',tip=tipHTML(tileName(t),`${LABEL[t.type]} · ${source||'타일 선택'}`,`${role}<br>${tileDescription(t)}`,'클릭하면 이 타일을 선택합니다.','good');return `<button class="actionChoice tileActionChoice type-${t.type}" style="--tileAccent:${accent}" onclick="${onclick}" data-tip="${escAttr(tip)}"><span class="tileChoiceIcon">${tileIcon(t)}</span><b>${escapeHtml(tileName(t))}</b><span class="tileRoleBadge">${LABEL[t.type]}</span><small>${escapeHtml(role)}${source?' · '+escapeHtml(source):''}</small></button>`};renderDepots=function(){const pos=[[345,0],[670,95],[670,350],[345,446],[20,350],[20,95]],p=current(),can=localCanControl(p);let html='';for(let di=0;di<6;di++){const d=G.depots[di],xy=pos[di],cands=can?dieCandidatesFor(di+1,null,true,true):[],quick=cands.some(x=>x.cost===0),workerOnly=cands.length>0&&!quick,targetClass=quick?'quickTarget':workerOnly?'workerQuick':'',stateClass=quick?'ok':workerOnly?'worker':'no',stateText=quick?'선택 가능':workerOnly?'👷 보정 가능':'';const tiles=d.tiles.map((t,ti)=>`<div class="depotTileWrap">${tileHTML(t,`quickTakeTile(${di},${ti})`,!can||cands.length===0,targetClass)}<span class="depotTileKind">${LABEL[t.type]}</span></div>`).join('');html+=`<div class="depot ${quick?'quickDepot':workerOnly?'workerDepot':''}" style="left:${xy[0]}px;top:${xy[1]}px"><span class="depotNum">${di+1}</span><div class="depotTiles">${tiles}</div><div class="goodsSlot">${d.goods.map(g=>`<span class="good g${g}" data-tip="${escAttr(tipHTML(`${g}번 상품`,'중앙 상품 창고','선박을 배치하면 이 창고의 상품을 선택해 가져올 수 있습니다.'))}">${g}</span>`).join('')}</div>${stateText?`<span class="depotState ${stateClass}">${stateText}</span>`:''}</div>`}html+=`<div class="blackDepot"><h4>검은 시장 · 🪙2</h4><div class="blackTiles">${G.black.map((t,i)=>`<div class="depotTileWrap">${tileHTML(t,`setAction('buy');clickBlack(${i})`,!can||current().blackBought||purchaseMethods(current()).length===0,'quickTarget')}<span class="depotTileKind">${LABEL[t.type]}</span></div>`).join('')}</div></div>`;q('depotRing').innerHTML=html;setTimeout(v27FitDepotRing,0)};function v27AllowedTypeChips2(allowed){return `<div class="effectTypeGuide">${allowed.map(type=>`<span class="effectTypeChip type-${type}"><b>${ICON[type]} ${LABEL[type]}</b><small>${escapeHtml(V27_TYPE_ROLE[type]||'')}</small></span>`).join('')}</div>`}buildingTakeChoice=function(p,b,allowed){const opts=[];for(let di=0;di<6;di++)G.depots[di].tiles.forEach((t,ti)=>{if(allowed.includes(t.type))opts.push({di,ti,t})});if(!opts.length){log(`${p.name}: ${b} 효과로 가져올 수 있는 타일이 없습니다.`);return}if(p.isAI){opts.sort((a,b)=>tileBaseValue(b.t)-tileBaseValue(a.t));const o=opts[0];if(p.storage.length>=3){let wi=0;for(let i=1;i<p.storage.length;i++)if(tileBaseValue(p.storage[i])<tileBaseValue(p.storage[wi]))wi=i;if(tileBaseValue(o.t)<=tileBaseValue(p.storage[wi])){log(`${p.name}: ${b} 효과를 사용하지 않았습니다.`);return}const old=p.storage.splice(wi,1)[0];log(`${p.name}: 보관 공간 확보를 위해 ${tileName(old)} 버림.`)}const t=G.depots[o.di].tiles.splice(o.ti,1)[0];p.storage.push(t);log(`${p.name}: ${b} 효과 → ${tileName(t)} 획득.`);return}special={type:'buildingTake'};const intro=`<p><b>${escapeHtml(b)} 효과</b> · 주사위 번호와 상관없이 아래 허용 종류 중 하나를 가져옵니다.</p>${v27AllowedTypeChips2(allowed)}<p class="effectGuideHint">색 = 타일 종류 · 마우스를 올리면 실제 효과 설명이 표시됩니다.</p>`,buttons=opts.map(o=>v27TileChoice(o.t,`buildingTake(${o.di},${o.ti})`,`${o.di+1}번 창고`)).join('');showModal(`${b} · 타일 획득`,`${intro}<div class="choices effectTileChoices">${buttons}<button class="choice skipEffectChoice" onclick="skipOptionalEffect()">효과 사용 안 함</button></div>`,false)};</script>
+<script id="finalQaScript">
+﻿/* final scoring / post-game flow */
+let v29EndToken=0,v29EndRunning=false,v29EndDone=false;
+function v29Wait(ms,token){return new Promise(resolve=>setTimeout(()=>resolve(token===v29EndToken),ms))}
+function v29GoodsCount(p){return Object.values(p?.goods||{}).reduce((a,b)=>a+(Number(b)||0),0)}
+function v29FinalBreakdown(p){
+  const goods=v29GoodsCount(p),silver=Number(p.silver)||0,workers=Math.floor((Number(p.workers)||0)/2),knowledge=knowledgeFinal(p)||0;
+  const bonus=goods+silver+workers+knowledge;
+  return {base:Math.max(0,(Number(p.score)||0)-bonus),goods,silver,workers,knowledge,final:Number(p.score)||0,filled:p.board.filter(c=>c.tile).length,regions:p.completedRegions?.length||0,colors:p.colorBonus?.length||0};
+}
+function v29SortedPlayers(){return [...G.players].sort((a,b)=>b.score-a.score||emptySpaces(b)-emptySpaces(a)||(G.order.indexOf(b.id)-G.order.indexOf(a.id)))}
+function v29MyPlayer(){return preferredMyPlayer?.()||G?.players?.find(p=>!p.isAI)||G?.players?.[0]||null}
+function v29ScoreRows(b){return [
+  ['게임 중 점수',b.base,'게임 도중 획득한 점수'],
+  ['남은 상품',b.goods,'상품 1개당 +1점'],
+  ['남은 은화',b.silver,'은화 1개당 +1점'],
+  ['남은 일꾼',b.workers,'일꾼 2개당 +1점'],
+  ['지식 타일 보너스',b.knowledge,'최종 점수형 지식 효과']
+]}
+function v29EnsureDock(){
+  let d=q('endReviewDock');if(d)return d;
+  d=document.createElement('div');d.id='endReviewDock';d.className='endReviewDock';document.body.appendChild(d);return d;
+}
+function v29UpdateDock(){
+  const d=v29EnsureDock();if(!G?.gameOver){d.classList.remove('on');return}
+  const mine=v29MyPlayer(),rematch=Net.enabled?(Net.isHost?'<button class="primary" onclick="v29Rematch()">리게임</button>':'<span>방장 리게임 대기</span>'):'<button class="primary" onclick="v29Rematch()">리게임</button>';
+  d.innerHTML=`<span>게임 종료</span><button class="secondary" onclick="v29ShowGameEnd(true)">결과 다시 보기</button>${mine?`<button class="secondary" onclick="v29ReviewPlayer(${mine.id})">내 영지 보기</button>`:''}${rematch}`;d.classList.add('on');
+}
+function v29Confetti(){
+  const old=q('finalConfetti');old?.remove();const c=document.createElement('div');c.id='finalConfetti';c.className='finalConfetti';
+  for(let i=0;i<34;i++){const x=document.createElement('i');x.style.left=`${Math.random()*100}%`;x.style.animationDelay=`${Math.random()*.55}s`;x.style.setProperty('--dx',`${(Math.random()-.5)*220}px`);x.style.background=['#d6ad5d','#8dbb6f','#b95e66','#6ea8c7','#d8c951'][i%5];c.appendChild(x)}
+  document.body.appendChild(c);setTimeout(()=>c.remove(),2500);
+}
+function v29BuildEndShell(sorted){
+  const root=q('gameEndOverlay');if(!root)return false;const mine=v29MyPlayer();
+  root.innerHTML=`<div class="gameEndCard finalFlow"><div class="finalHead"><div class="gameEndCrown">♛</div><div class="gameEndKicker">GAME COMPLETE</div><h2 id="v29EndTitle">최종 점수 계산</h2><p id="v29EndSub">각 플레이어의 남은 자원과 최종 보너스를 순서대로 합산합니다.</p></div><div id="v29Winner" class="finalWinnerBanner"></div><div class="finalScoreGrid"><div id="v29Players" class="finalPlayers"></div><div id="v29Calc" class="finalCalc"><div class="finalCalcTitle">점수 계산 대기 중</div><div class="finalCalcRows"></div><div class="finalCalcTotal"><span>현재 점수</span><strong>0점</strong></div></div></div><button id="v29Skip" class="secondary finalSkip" onclick="v29SkipEnd()">점수 계산 건너뛰기</button><div id="v29Controls" class="finalControls hidden"><button class="secondary" onclick="closeGameEndOverlay()">게임 화면 보기</button>${mine?`<button class="secondary" onclick="v29ReviewPlayer(${mine.id})">내 영지 다시 보기</button>`:''}${Net.enabled?(Net.isHost?'<button class="primary" onclick="v29Rematch()">같은 방에서 리게임</button>':'<button class="primary" disabled>방장이 리게임을 시작할 수 있습니다</button>'):'<button class="primary" onclick="v29Rematch()">같은 설정으로 리게임</button>'}</div><div class="finalFootNote">동점이면 영지의 빈칸이 적은 플레이어가 우선입니다. 순위 카드에서 각 플레이어의 영지도 다시 볼 수 있습니다.</div></div>`;
+  q('v29Players').innerHTML=sorted.map((p,i)=>{const b=v29FinalBreakdown(p);return `<div id="v29Player_${p.id}" class="finalPlayer"><span class="finalRank">${i+1}</span><div class="finalPlayerName"><b>${escapeHtml(p.name)}${p.id===mine?.id?' · 나':''}</b><small>영지 ${b.filled}/37 · 완성 영역 ${b.regions} · 색 완성 ${b.colors}</small><button class="secondary finalBoardBtn" onclick="v29ReviewPlayer(${p.id})">영지 보기</button></div><strong id="v29Score_${p.id}" class="finalLiveScore">${b.base}점</strong></div>`}).join('');
+  root.classList.add('on');return true;
+}
+function v29SetCalc(p,b,activeRow=-1,running=b.base){
+  const calc=q('v29Calc');if(!calc)return;const rows=v29ScoreRows(b);
+  calc.querySelector('.finalCalcTitle').textContent=`${p.name} 점수 계산`;
+  calc.querySelector('.finalCalcRows').innerHTML=rows.map((r,i)=>`<div class="finalCalcRow ${i===activeRow?'on':''}"><span>${r[0]}<small style="display:block;color:#8f7b64;margin-top:2px">${r[2]}</small></span><strong>${i===0?r[1]:'+'+r[1]}점</strong></div>`).join('');
+  calc.querySelector('.finalCalcTotal strong').textContent=`${running}점`;
+}
+function v29SetLiveScore(p,score){const el=q(`v29Score_${p.id}`);if(el)el.textContent=`${score}점`}
+async function v29AnimateFinal(sorted,token){
+  v29EndRunning=true;v29EndDone=false;
+  for(const p of sorted){
+    if(token!==v29EndToken)return;document.querySelectorAll('.finalPlayer').forEach(x=>x.classList.remove('active'));q(`v29Player_${p.id}`)?.classList.add('active');
+    const b=v29FinalBreakdown(p),rows=v29ScoreRows(b);let running=b.base;v29SetLiveScore(p,running);v29SetCalc(p,b,0,running);v27Sound?.('tick');if(!(await v29Wait(320,token)))return;
+    for(let i=1;i<rows.length;i++){running+=rows[i][1];v29SetCalc(p,b,i,running);v29SetLiveScore(p,running);if(rows[i][1]>0)v27Sound?.(i===2?'coin':'score');if(!(await v29Wait(310,token)))return}
+    v29SetCalc(p,b,-1,b.final);v29SetLiveScore(p,b.final);if(!(await v29Wait(260,token)))return;
+  }
+  if(token!==v29EndToken)return;v29FinishEnd(sorted);
+}
+function v29FinishEnd(sorted){
+  v29EndRunning=false;v29EndDone=true;const winner=sorted[0],mine=v29MyPlayer();
+  document.querySelectorAll('.finalPlayer').forEach(x=>x.classList.remove('active'));q(`v29Player_${winner.id}`)?.classList.add('winner');
+  q('v29EndTitle').textContent=`${winner.name} 승리`;q('v29EndSub').textContent='최종 점수 계산이 완료되었습니다.';
+  const w=q('v29Winner');w.innerHTML=`♛ <b>${escapeHtml(winner.name)}</b> · ${winner.score}점${winner.id===mine?.id?' · 승리했습니다':''}`;w.classList.add('on');
+  q('v29Skip')?.classList.add('hidden');q('v29Controls')?.classList.remove('hidden');v29UpdateDock();v29Confetti();v27Sound?.('win');
+}
+function v29SkipEnd(){
+  if(!G?.gameOver)return;v29EndToken++;const sorted=v29SortedPlayers();for(const p of sorted)v29SetLiveScore(p,p.score);v29FinishEnd(sorted);
+}
+function v29ShowGameEnd(force=false){
+  if(!G?.gameOver)return;if(v29EndRunning&&!force)return;if(q('gameEndOverlay')?.classList.contains('on')&&!force)return;
+  v29EndToken++;const token=v29EndToken,sorted=v29SortedPlayers();closeModal?.();if(!v29BuildEndShell(sorted))return;v29EndDone=false;v29AnimateFinal(sorted,token);
+}
+function v29ReviewPlayer(id){
+  if(!G)return;v29EndToken++;v29EndRunning=false;q('gameEndOverlay')?.classList.remove('on');viewPlayerBoard(id);v29UpdateDock();
+}
+function v29Rematch(){
+  if(!G?.gameOver)return;v29EndToken++;v29EndRunning=false;q('gameEndOverlay')?.classList.remove('on');q('endReviewDock')?.classList.remove('on');
+  if(Net.enabled){if(Net.isHost)netRematch();else showActionToast?.('방장이 리게임을 시작할 수 있습니다.','turn');return}
+  const defs=G.players.map((p,i)=>({kind:p.isAI?'ai':'human',name:p.name,difficulty:p.aiDifficulty||G.diff||'normal',duchyId:p.duchyId,startMode:'manual',colorIndex:i%4}));
+  const assignments=G.players.map(p=>({duchyId:p.duchyId,startCastleIndex:p.startCastleIndex})),n=defs.length,humans=defs.filter(x=>x.kind==='human').length,diff=G.diff||'normal',mode=G.duchyMode||'seat_custom';
+  initGame(n,humans,diff,defs,null,assignments,mode);showScreen('game');persistLocal();
+}
+closeGameEndOverlay=function(){v29EndToken++;v29EndRunning=false;q('gameEndOverlay')?.classList.remove('on');v29UpdateDock()};
+v26ShowGameEnd=function(force=false){v29ShowGameEnd(force)};
+const _v29Render=render;render=function(){_v29Render();if(G?.gameOver)v29UpdateDock();else q('endReviewDock')?.classList.remove('on')};
+window.v29QaEnd=function(){if(!G)quickStart(2);G.players.forEach((p,i)=>{p.score=40+i*9;p.silver=2+i;p.workers=3+i;p.goods[1]=(p.goods[1]||0)+i+1});G.gameOver=true;render();v29ShowGameEnd(true)};
+
+
+/* mobile QA */
+const _mobileFitEstateBoard=fitEstateBoard;
+fitEstateBoard=function(){
+  const col=document.querySelector('.estateColumn'),vp=q('estateViewport');if(!col||!vp)return;
+  const mobile=window.matchMedia('(max-width:760px)').matches;
+  const min=mobile?260:420, floor=mobile?.36:.62;
+  const available=Math.max(min,col.clientWidth-(mobile?4:8));
+  const scale=Math.max(floor,Math.min(1,available/710));
+  document.documentElement.style.setProperty('--estateScale',scale.toFixed(3));
+  vp.style.width=Math.round(710*scale)+'px';
+  vp.style.height=Math.round(610*scale)+'px';
+};
+window.addEventListener('orientationchange',()=>setTimeout(()=>{if(G)fitEstateBoard()},120));
+
+</script>
 </body>
 </html>
