@@ -780,6 +780,14 @@ html,body{max-width:100%;overflow-x:hidden}.topbar{height:auto;min-height:48px;p
 @media(max-width:420px){.depotRing{grid-template-columns:1fr!important}.centralBoard{min-height:1290px!important}.blackDepot{grid-column:auto!important}.blackTiles{grid-template-columns:repeat(3,44px)!important}.typeLegendBar{grid-template-columns:repeat(2,minmax(0,1fr))!important}.primaryActionMenu{grid-template-columns:repeat(2,minmax(0,1fr))!important}.topbar .brand{flex-basis:100%}}
 
 </style>
+<style id="scoreFinishStyle">
+/* final board containment + score/order visibility */
+.depot{overflow:hidden!important}.depotTiles{margin:34px 0 34px 38px!important;max-height:94px!important;align-content:flex-start!important;overflow:hidden!important}.goodsSlot{left:42px!important;right:8px!important;bottom:7px!important;max-width:none!important;height:26px!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:3px!important;flex-wrap:nowrap!important;padding:2px 4px!important;background:#eadcb8ee!important;border:1px solid #9d8357!important;border-radius:7px!important;overflow:hidden!important}.goodsSlot .good{flex:0 0 22px!important;width:22px!important;height:22px!important}.depotState{z-index:9!important}.depotTileWrap,.depotTileWrap .hexTile{position:relative;z-index:4}
+.boardStatusStrip{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:6px 0 8px}.boardStatusGroup{display:flex;align-items:center;gap:6px;min-width:0;padding:7px 9px;border:1px solid #6c472e;border-radius:9px;background:linear-gradient(180deg,#28170f,#1a0f0a);overflow:hidden}.boardStatusGroup>b{flex:0 0 auto;font-size:10px;color:#e7c87f}.boardStatusItems{display:flex;gap:5px;min-width:0;overflow-x:auto;scrollbar-width:thin}.statusPill{display:flex;align-items:center;gap:5px;flex:0 0 auto;padding:5px 7px;border:1px solid #65452f;border-radius:999px;background:#120a07;color:#d8c5a4;font-size:9px;white-space:nowrap}.statusPill.current{border-color:#e0b95e;background:#4a2520;color:#fff2c8;box-shadow:0 0 0 1px #e0b95e44}.statusPill.rank1{border-color:#e3c15c;color:#ffe39a}.statusDot{width:9px;height:9px;border-radius:50%;box-shadow:0 0 0 1px #fff7 inset}.statusPill strong{font-size:10px;color:#fff0c4}.scoreLead{font-size:8px;color:#bba78b}.turnTrack{width:72%!important;gap:7px!important;overflow:hidden!important}.turnPos{gap:4px!important}.turnPos small{min-width:18px;font-weight:900;color:#6d4b2b}.turnName{font-size:8px;font-weight:900;color:#5e432b;max-width:68px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pawn{flex:0 0 22px}
+.vpMarker{width:24px!important;height:24px!important;font-size:9px!important;z-index:10!important}.vpMarker:after{content:attr(data-score);position:absolute;left:50%;top:25px;transform:translateX(-50%);padding:1px 4px;border-radius:5px;background:#24140ddd;color:#fff0c4;font-size:7px;white-space:nowrap;box-shadow:0 1px 4px #0008}.vpTick.major{width:25px!important;height:25px!important}
+@media(max-width:760px){.boardStatusStrip{grid-template-columns:1fr}.boardStatusGroup{padding:6px}.goodsSlot{left:58%!important;right:6px!important}.turnTrack{width:88%!important}.turnName{max-width:46px}.vpMarker:after{display:none}}
+
+</style>
 </head>
 <body>
 <div class="topbar">
@@ -3126,6 +3134,24 @@ fitEstateBoard=function(){
   vp.style.height=Math.round(610*scale)+'px';
 };
 window.addEventListener('orientationchange',()=>setTimeout(()=>{if(G)fitEstateBoard()},120));
+
+</script>
+<script id="scoreFinishScript">
+/* final score/order + robust ending trigger */
+let v30EndAcknowledged=false,v30EndAutoQueued=false;
+function v30EnsureBoardStatus(){let el=q('boardStatusStrip');if(el)return el;const board=document.querySelector('.centralBoard');if(!board)return null;el=document.createElement('div');el.id='boardStatusStrip';el.className='boardStatusStrip';board.parentNode.insertBefore(el,board);return el}
+function v30RenderBoardStatus(){
+  if(!G)return;const root=v30EnsureBoardStatus();if(!root)return;const cur=current(),score=[...G.players].sort((a,b)=>b.score-a.score||a.id-b.id);
+  const turns=G.order.map((id,i)=>{const p=G.players[id],now=p.id===cur.id;return `<span class="statusPill ${now?'current':''}"><i class="statusDot" style="background:${p.color}"></i><strong>${i+1}</strong>${escapeHtml(p.name)}${now?' · 현재':''}</span>`}).join('');
+  const scores=score.map((p,i)=>`<span class="statusPill ${i===0?'rank1':''}"><i class="statusDot" style="background:${p.color}"></i><span class="scoreLead">${i+1}위</span>${escapeHtml(p.name)} <strong>${p.score}점</strong></span>`).join('');
+  root.innerHTML=`<div class="boardStatusGroup"><b>턴 순서</b><div class="boardStatusItems">${turns}</div></div><div class="boardStatusGroup"><b>점수 순위</b><div class="boardStatusItems">${scores}</div></div>`;
+  const track=q('turnTrack');if(track)track.innerHTML=G.order.map((id,i)=>{const p=G.players[id],now=p.id===cur.id;return `<div class="turnPos ${now?'current':''}"><small>${i+1}</small><span class="pawn" style="background:${p.color};${now?'outline:3px solid #f4cf6d':''}">${p.id+1}</span><span class="turnName">${escapeHtml(p.name)}</span></div>`}).join('');
+  q('vpTrackLayer')?.querySelectorAll('.vpMarker').forEach((m,i)=>{const p=G.players[i];if(p){m.dataset.score=`${p.score}점`;m.title=`${p.name}: ${p.score}점`}});
+}
+const _v30CloseEnd=closeGameEndOverlay;closeGameEndOverlay=function(){v30EndAcknowledged=true;return _v30CloseEnd()};
+const _v30ReviewPlayer=v29ReviewPlayer;v29ReviewPlayer=function(id){v30EndAcknowledged=true;return _v30ReviewPlayer(id)};
+const _v30Rematch=v29Rematch;v29Rematch=function(){v30EndAcknowledged=false;v30EndAutoQueued=false;return _v30Rematch()};
+const _v30Render=render;render=function(){_v30Render();if(!G)return;v30RenderBoardStatus();if(!G.gameOver){v30EndAcknowledged=false;v30EndAutoQueued=false;return}if(!v30EndAcknowledged&&!v29EndRunning&&!q('gameEndOverlay')?.classList.contains('on')&&!v30EndAutoQueued){v30EndAutoQueued=true;setTimeout(()=>{v30EndAutoQueued=false;if(G?.gameOver&&!v30EndAcknowledged&&!q('gameEndOverlay')?.classList.contains('on'))v29ShowGameEnd(true)},700)}};
 
 </script>
 </body>
