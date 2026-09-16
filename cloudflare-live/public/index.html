@@ -816,6 +816,36 @@ html,body{max-width:100%;overflow-x:hidden}.topbar{height:auto;min-height:48px;p
 @media(max-width:360px){.depotRing{gap:3px!important;margin-left:4px!important;margin-right:4px!important}.depotTiles{margin-left:20px!important;grid-template-columns:repeat(2,34px)!important}.depotTileWrap{min-width:34px!important;max-width:34px!important}.depotTileWrap .hexTile,.blackDepot .depotTileWrap .hexTile{width:33px!important;height:30px!important}.depotTileKind{max-width:33px!important}.goodsSlot{margin-left:20px!important}.blackTiles{grid-template-columns:repeat(auto-fit,34px)!important}.centralBoard{border-width:4px!important}}
 
 </style>
+<style id="boardLayoutV32">
+/* v32 structured common board + score track */
+@media(min-width:761px){
+.centralBoard{min-height:660px!important}
+.centralBoard:after{content:"";position:absolute;inset:15px;border:4px solid #9a8258;border-radius:18px;box-shadow:0 0 0 2px #f2e4be66 inset,0 0 0 1px #4c3923;pointer-events:none;z-index:2}
+.depotRing{left:50%!important;top:51%!important;width:min(1120px,calc(100% - 150px))!important;height:468px!important;transform:translate(-50%,-50%)!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(190px,.92fr)!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;gap:14px!important;padding:0!important}
+.depot{position:relative!important;left:auto!important;top:auto!important;width:auto!important;height:auto!important;min-height:0!important;padding:10px!important;overflow:hidden!important;border-radius:15px!important}
+.depotTiles{display:grid!important;grid-template-columns:repeat(2,minmax(48px,1fr))!important;justify-items:center!important;align-content:center!important;margin:39px 8px 62px!important;gap:8px 6px!important;max-width:none!important;max-height:none!important;overflow:visible!important}
+.depotState{display:inline-flex!important;align-items:center!important;position:absolute!important;top:10px!important;right:10px!important;bottom:auto!important;left:auto!important;z-index:9!important;padding:5px 8px!important;border-radius:999px!important;font-size:9px!important;font-weight:950!important;line-height:1!important;white-space:nowrap!important}
+.depotState.ok{background:#6d2930!important;color:#fff1c8!important;border:1px solid #b96d61!important}.depotState.worker{background:#8a571a!important;color:#fff0c4!important;border:1px solid #c28a3f!important}
+.depot.quickDepot{box-shadow:0 0 0 3px #d9aa42,0 10px 22px #0004!important}.depot.workerDepot{box-shadow:0 0 0 3px #b9782f,0 10px 22px #0004!important}
+.goodsSlot{left:44px!important;right:8px!important;bottom:8px!important;min-height:29px!important;height:auto!important;max-height:52px!important;max-width:none!important;display:flex!important;align-items:center!important;align-content:center!important;justify-content:flex-end!important;gap:2px 3px!important;flex-wrap:wrap!important;padding:3px 4px!important;overflow:hidden!important}
+.goodsSlot .good{flex:0 0 auto!important;min-width:20px!important;width:auto!important;height:21px!important;padding:0 3px!important;display:flex!important;gap:1px!important}.goodsSlot .good b{font-size:8px}
+.blackDepot{position:relative!important;left:auto!important;top:auto!important;transform:none!important;grid-column:4!important;grid-row:1/3!important;width:auto!important;height:auto!important;min-height:0!important;max-height:none!important;padding:13px 10px!important;overflow:hidden!important;border-radius:16px!important;align-self:stretch!important}
+.blackDepot h4{font-size:13px!important;margin:1px 0 12px!important}.blackTiles{display:grid!important;grid-template-columns:repeat(2,58px)!important;justify-content:center!important;align-content:center!important;gap:10px 9px!important;height:calc(100% - 34px)!important;max-height:none!important;overflow:hidden!important}.blackDepot .depotTileWrap{min-width:58px!important;max-width:58px!important}.blackDepot .depotTileWrap .hexTile{width:56px!important;height:50px!important}
+.turnTrack{bottom:23px!important;width:min(760px,62%)!important;min-height:42px!important;z-index:5!important}
+}
+/* shared score-track clarity */
+.vpTick{z-index:4!important;border-color:#7b6746!important;box-shadow:0 1px 3px #0003}.vpTick.major{background:#8e3033!important;color:#fff!important;font-weight:950!important;box-shadow:0 2px 7px #0005}.vpTick.startTick{background:#254f35!important;color:#fff!important;border-color:#d8bd69!important;box-shadow:0 0 0 3px #f3d36d66,0 3px 8px #0005!important}
+.vpMarker{z-index:12!important;width:28px!important;height:28px!important;border:3px solid #fff!important;font-size:10px!important;box-shadow:0 3px 10px #0009!important}.vpMarker.leader{border-color:#f5d36a!important;box-shadow:0 0 0 3px #8b641e88,0 4px 12px #000a!important}.vpMarker.leader:before{content:"1\C704";position:absolute;bottom:31px;left:50%;transform:translateX(-50%);background:#5e3b14;color:#ffe7a1;border:1px solid #d6aa4c;border-radius:999px;padding:2px 5px;font-size:7px;white-space:nowrap}.vpMarker:after{content:attr(data-score);position:absolute;top:31px;left:50%;transform:translateX(-50%);background:#22140de8;color:#fff0c7;border:1px solid #6f5036;border-radius:5px;padding:1px 4px;font-size:7px;white-space:nowrap}
+.vpStartFlag{position:absolute;left:38px;top:34px;z-index:8;padding:4px 7px;border-radius:7px;background:#254f35;color:#fff1c7;border:1px solid #d7bc6d;font-size:9px;font-weight:950;box-shadow:0 3px 8px #0005}.vpDir{position:absolute;z-index:7;color:#65482f;font-size:18px;font-weight:950;text-shadow:0 1px #fff7;pointer-events:none}.vpDir.top{top:17px;left:50%}.vpDir.right{right:17px;top:50%;transform:rotate(90deg)}.vpDir.bottom{bottom:17px;left:50%;transform:rotate(180deg)}.vpDir.left{left:17px;top:50%;transform:rotate(270deg)}
+@media(max-width:1500px) and (min-width:761px){.depotState{font-size:8px!important;padding:4px 5px!important}}
+@media(max-width:760px){
+.centralBoard:after{content:"";position:absolute;inset:8px;border:3px solid #9a8258;border-radius:12px;box-shadow:0 0 0 1px #f2e4be66 inset;pointer-events:none;z-index:2}
+.depotState{display:inline-flex!important;align-items:center!important;position:absolute!important;top:7px!important;right:7px!important;bottom:auto!important;left:auto!important;padding:4px 6px!important;border-radius:999px!important;font-size:7px!important;line-height:1!important;white-space:nowrap!important;z-index:9!important}
+.depotState.ok{background:#6d2930!important;color:#fff1c8!important;border:1px solid #b96d61!important}.depotState.worker{background:#8a571a!important;color:#fff0c4!important;border:1px solid #c28a3f!important}
+.depotTiles{margin-top:30px!important}.goodsSlot{bottom:auto!important;margin-top:4px!important}.vpStartFlag{left:22px;top:20px;font-size:7px;padding:3px 5px}.vpDir{font-size:13px}.vpDir.top{top:8px}.vpDir.right{right:8px}.vpDir.bottom{bottom:8px}.vpDir.left{left:8px}.vpMarker{width:24px!important;height:24px!important;font-size:8px!important}.vpMarker:after{top:26px;font-size:6px}.vpMarker.leader:before{bottom:27px;font-size:6px}.turnTrack{z-index:6!important}
+}
+
+</style>
 </head>
 <body>
 <div class="topbar">
@@ -3220,6 +3250,33 @@ const _v31RenderDepots=renderDepots;
 renderDepots=function(){const out=_v31RenderDepots();if(window.matchMedia('(max-width:760px)').matches)v31CompactGoods();return out};
 const _v31Render=render;
 render=function(){const out=_v31Render();if(window.matchMedia('(max-width:760px)').matches)v31CompactGoods();return out};
+</script>
+<script id="boardLayoutV32Script">
+﻿/* v32 board structure + score track */
+function v32CompactGoods(){if(!G)return;document.querySelectorAll('.depot').forEach((dep,di)=>{const slot=dep.querySelector('.goodsSlot'),goods=G.depots?.[di]?.goods||[];if(!slot)return;const counts={};for(const g of goods)counts[g]=(counts[g]||0)+1;slot.innerHTML=Object.keys(counts).sort((a,b)=>a-b).map(g=>`<span class="good g${g}" data-tip="${escAttr(tipHTML(`${g}번 상품`,'중앙 상품 창고',`현재 ${counts[g]}개 쌓여 있습니다.`))}"><span>${g}</span>${counts[g]>1?`<b>×${counts[g]}</b>`:''}</span>`).join('')})}
+renderDepots=function(){
+  const p=current(),can=localCanControl(p);let html='';
+  for(let di=0;di<6;di++){
+    const d=G.depots[di],cands=can?dieCandidatesFor(di+1,null,true,true):[],quick=cands.some(x=>x.cost===0),workerOnly=cands.length>0&&!quick,minWorker=workerOnly?Math.max(1,Math.min(...cands.map(x=>Number(x.cost)||1))):0;
+    const targetClass=quick?'quickTarget':workerOnly?'workerQuick':'',stateClass=quick?'ok':workerOnly?'worker':'',stateText=quick?'✓ 바로 선택':workerOnly?`♟ 일꾼 ${minWorker}개`:'';
+    const tiles=d.tiles.map((t,ti)=>`<div class="depotTileWrap">${tileHTML(t,`quickTakeTile(${di},${ti})`,!can||cands.length===0,targetClass)}<span class="depotTileKind">${LABEL[t.type]}</span></div>`).join('');
+    html+=`<div class="depot ${quick?'quickDepot':workerOnly?'workerDepot':''}"><span class="depotNum">${di+1}</span>${stateText?`<span class="depotState ${stateClass}" title="${quick?'보정 없이 바로 선택할 수 있습니다.':`일꾼 ${minWorker}개를 사용하면 선택할 수 있습니다.`}">${stateText}</span>`:''}<div class="depotTiles">${tiles}</div><div class="goodsSlot"></div></div>`;
+  }
+  html+=`<div class="blackDepot"><h4>검은 시장 · 🪙2</h4><div class="blackTiles">${G.black.map((t,i)=>`<div class="depotTileWrap">${tileHTML(t,`setAction('buy');clickBlack(${i})`,!can||current().blackBought||purchaseMethods(current()).length===0,'quickTarget')}<span class="depotTileKind">${LABEL[t.type]}</span></div>`).join('')}</div></div>`;
+  q('depotRing').innerHTML=html;v32CompactGoods();
+};
+renderVPTrack=function(){
+  const root=q('vpTrackLayer');if(!root||!G)return;let h='<span class="vpStartFlag">START · 0점</span><span class="vpDir top">→</span><span class="vpDir right">→</span><span class="vpDir bottom">→</span><span class="vpDir left">→</span>';
+  for(let n=0;n<100;n++){const pos=vpPos(n),major=n%10===0;h+=`<span class="vpTick ${major?'major':''} ${n===0?'startTick':''}" style="left:${pos.x}%;top:${pos.y}%">${major?n:''}</span>`}
+  const ranked=[...G.players].sort((a,b)=>b.score-a.score||emptySpaces(b)-emptySpaces(a)||(G.order.indexOf(b.id)-G.order.indexOf(a.id))),seen={};
+  for(const p of G.players){const n=((p.score%100)+100)%100,pos=vpPos(p.score),lap=Math.floor(p.score/100),rank=ranked.findIndex(x=>x.id===p.id),key=String(n),stack=seen[key]||0;seen[key]=stack+1;let dx=0,dy=0;if(stack){const shift=stack*13;if(n<25)dy=shift;else if(n<50)dx=-shift;else if(n<75)dy=-shift;else dx=shift}
+    h+=`<span class="vpMarker ${rank===0?'leader':''}" data-score="${p.score}점" data-rank="${rank+1}" style="left:${pos.x}%;top:${pos.y}%;background:${p.color};transform:translate(-50%,-50%) translate(${dx}px,${dy}px)" title="${escAttr(`${rank+1}위 · ${p.name} · ${p.score}점`)}">${lap?`${p.id+1}+${lap}00`:p.id+1}</span>`;
+  }
+  root.innerHTML=h;
+};
+const _v32Render=render;render=function(){const out=_v32Render();if(G){v32CompactGoods();renderVPTrack()}return out};
+window.addEventListener('resize',()=>{if(G){v32CompactGoods();renderVPTrack()}});
+
 </script>
 </body>
 </html>
