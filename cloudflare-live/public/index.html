@@ -788,6 +788,19 @@ html,body{max-width:100%;overflow-x:hidden}.topbar{height:auto;min-height:48px;p
 @media(max-width:760px){.boardStatusStrip{grid-template-columns:1fr}.boardStatusGroup{padding:6px}.goodsSlot{left:58%!important;right:6px!important}.turnTrack{width:88%!important}.turnName{max-width:46px}.vpMarker:after{display:none}}
 
 </style>
+<style id="mobileCompactBoardStyle">
+/* compact mobile common board */
+@media(max-width:760px){
+.centralBoard{min-height:0!important;height:auto!important;padding:0 0 52px!important;overflow:hidden!important}.depotRing{position:relative!important;left:auto!important;right:auto!important;top:auto!important;width:auto!important;height:auto!important;transform:none!important;margin:62px 5px 0!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important}
+.depot{position:relative!important;left:auto!important;top:auto!important;width:auto!important;height:auto!important;min-height:96px!important;padding:4px!important;border-radius:9px!important;overflow:hidden!important}.depotNum{left:4px!important;top:4px!important;width:26px!important;height:26px!important;font-size:11px!important}.depotState{right:3px!important;top:4px!important;bottom:auto!important;max-width:64px!important;font-size:6px!important;line-height:1.05!important;padding:3px 4px!important;white-space:nowrap!important}
+.depotTiles{margin:27px 1px 2px 22px!important;max-width:none!important;max-height:none!important;min-height:39px!important;display:grid!important;grid-template-columns:repeat(2,36px)!important;grid-auto-rows:min-content!important;justify-content:start!important;align-content:start!important;gap:1px 2px!important;overflow:visible!important}.depotTileWrap{min-width:36px!important;max-width:36px!important;gap:0!important}.depotTileWrap .hexTile{width:35px!important;height:32px!important;font-size:11px!important}.depotTileWrap .hexTile small{font-size:5px!important;max-width:31px!important}.depotTileKind{font-size:5.5px!important;padding:1px 2px!important;max-width:35px!important}
+.goodsSlot{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;width:auto!important;max-width:none!important;height:auto!important;min-height:0!important;margin:1px 1px 0 22px!important;padding:2px!important;display:flex!important;justify-content:flex-start!important;align-items:center!important;gap:2px!important;flex-wrap:wrap!important;overflow:visible!important;background:#eadcb8e8!important;border:1px solid #9d8357!important;border-radius:5px!important}.goodsSlot:empty{display:none!important}.goodsSlot .good{flex:0 0 auto!important;width:auto!important;min-width:18px!important;height:17px!important;padding:0 2px!important;font-size:6px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:1px!important}.goodsSlot .good b{font-size:5.5px;line-height:1;color:#3a2918}
+.blackDepot{position:relative!important;left:auto!important;top:auto!important;transform:none!important;grid-column:1/-1!important;width:100%!important;height:auto!important;min-height:76px!important;max-height:none!important;padding:6px!important}.blackDepot h4{margin:0 0 3px!important;font-size:9px!important}.blackTiles{display:grid!important;grid-template-columns:repeat(auto-fit,36px)!important;justify-content:center!important;align-content:start!important;gap:2px!important;max-height:none!important;overflow:visible!important}.blackDepot .depotTileWrap .hexTile{width:35px!important;height:32px!important}
+.turnTrack{bottom:7px!important;width:94%!important;min-height:31px!important;padding:3px 5px!important;gap:4px!important}.turnName{max-width:32px!important;font-size:6px!important}.pawn{width:18px!important;height:18px!important;flex-basis:18px!important}.vpTick{width:14px!important;height:14px!important}.vpTick.major{width:20px!important;height:20px!important}.vpMarker{width:19px!important;height:19px!important}
+}
+@media(max-width:360px){.depotRing{gap:3px!important;margin-left:4px!important;margin-right:4px!important}.depotTiles{margin-left:20px!important;grid-template-columns:repeat(2,34px)!important}.depotTileWrap{min-width:34px!important;max-width:34px!important}.depotTileWrap .hexTile,.blackDepot .depotTileWrap .hexTile{width:33px!important;height:30px!important}.depotTileKind{max-width:33px!important}.goodsSlot{margin-left:20px!important}.blackTiles{grid-template-columns:repeat(auto-fit,34px)!important}.centralBoard{border-width:4px!important}}
+
+</style>
 </head>
 <body>
 <div class="topbar">
@@ -3177,6 +3190,21 @@ v27Ribbon=function(title,sub='',icon='★',accent='#d2a04e'){const root=q('event
 const _soloCheatRender=render;render=function(){if(soloCheatPendingDie&&G&&!G.gameOver){const h=soloHumans()[0];if(h&&current()?.id===h.id&&(h.bonusActions||0)>0){selectedDie='bonus';bonusChosen=soloCheatPendingDie;soloCheatPendingDie=null}}return _soloCheatRender()};
 document.addEventListener('keydown',e=>{if(e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey)return;const t=e.target,tag=t?.tagName;if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'||t?.isContentEditable)return;if(!G||!q('game')?.classList.contains('active')){soloCheatBuffer='';return}if(e.key==='Enter'){if(soloCheatBuffer){const cmd=soloCheatBuffer;soloCheatBuffer='';soloCheatExec(cmd);e.preventDefault()}return}if(e.key==='Backspace'){soloCheatBuffer=soloCheatBuffer.slice(0,-1);return}if(e.key.length===1&&/[a-zA-Z0-9.]/.test(e.key)){soloCheatBuffer=(soloCheatBuffer+e.key).slice(-24)}});
 
+</script>
+<script id="mobileCompactGoodsScript">
+/* compact mobile goods stacks */
+function v31CompactGoods(){
+  if(!G)return;
+  document.querySelectorAll('.depot').forEach((dep,di)=>{
+    const slot=dep.querySelector('.goodsSlot'),goods=G.depots?.[di]?.goods||[];if(!slot)return;
+    const counts={};for(const g of goods)counts[g]=(counts[g]||0)+1;
+    slot.innerHTML=Object.keys(counts).sort((a,b)=>a-b).map(g=>`<span class="good g${g}" data-tip="${escAttr(tipHTML(`${g}번 상품`,'중앙 상품 창고',`현재 ${counts[g]}개 쌓여 있습니다.`))}">${g}${counts[g]>1?`<b>×${counts[g]}</b>`:''}</span>`).join('');
+  });
+}
+const _v31RenderDepots=renderDepots;
+renderDepots=function(){const out=_v31RenderDepots();if(window.matchMedia('(max-width:760px)').matches)v31CompactGoods();return out};
+const _v31Render=render;
+render=function(){const out=_v31Render();if(window.matchMedia('(max-width:760px)').matches)v31CompactGoods();return out};
 </script>
 </body>
 </html>
